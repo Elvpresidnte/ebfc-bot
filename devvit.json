@@ -1,0 +1,78 @@
+{
+  "$schema": "https://developers.reddit.com/schema/config-file.v1.json",
+  "name": "ebfc-bot",
+  "server": {
+    "dir": "dist/server",
+    "entry": "index.js"
+  },
+  "permissions": {
+    "http": {
+      "enable": true,
+      "domains": ["ebfc.co.uk", "www.ebfc.co.uk"]
+    },
+    "reddit": {
+      "enable": true
+    },
+    "redis": true
+  },
+  "scheduler": {
+    "tasks": {
+      "ebfc-tick": {
+        "endpoint": "/internal/scheduler/tick",
+        "cron": "7,37 * * * *"
+      }
+    }
+  },
+  "menu": {
+    "items": [
+      {
+        "label": "EBFC Bot: check for updates now",
+        "description": "Run the bot immediately instead of waiting for the next scheduled check.",
+        "forUserType": "moderator",
+        "location": "subreddit",
+        "endpoint": "/internal/menu/run-now"
+      },
+      {
+        "label": "EBFC Bot: post league table now",
+        "description": "Post the current league table straight away.",
+        "forUserType": "moderator",
+        "location": "subreddit",
+        "endpoint": "/internal/menu/post-table"
+      }
+    ]
+  },
+  "settings": {
+    "subreddit": {
+      "postNews": {
+        "type": "boolean",
+        "label": "Post new club news articles as link posts",
+        "defaultValue": true
+      },
+      "skipMatchReports": {
+        "type": "boolean",
+        "label": "Skip 'Match Report' articles in the news feed (the full-time post already links the report)",
+        "defaultValue": false
+      },
+      "postResults": {
+        "type": "boolean",
+        "label": "Post full-time results",
+        "defaultValue": true
+      },
+      "postPreviews": {
+        "type": "boolean",
+        "label": "Post match previews before first-team games",
+        "defaultValue": true
+      },
+      "previewHoursBefore": {
+        "type": "number",
+        "label": "How many hours before kick-off to post the preview",
+        "defaultValue": 24
+      },
+      "postTable": {
+        "type": "boolean",
+        "label": "Post the league table once a week (Monday morning, only if it changed)",
+        "defaultValue": true
+      }
+    }
+  }
+}
